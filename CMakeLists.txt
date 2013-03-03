@@ -21,3 +21,6 @@ else()
 	message("Can't verify SDL version number, make sure it is at least version 2.0.0.")
 endif()
 
+### Subdirectories
+
+add_subdirectory(src)
