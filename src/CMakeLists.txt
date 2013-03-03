@@ -9,6 +9,7 @@ include_directories(${CMAKE_SOURCE_DIR}/include/)
 
 add_library(SDLG SHARED
 	SDLG_stdinc.c
+	SDLG_video.c
 )
 
 set_target_properties(SDLG

@@ -26,20 +26,29 @@
 
 /**
  * @file
- * @brief Main file of the SDL glue library.
- *
- * This header includes all other library headers.
+ * @brief Implementation of @ref SDLG_video.h.
  */
 
-#ifndef SDLG_H_INCLUDED
-#define SDLG_H_INCLUDED
-
-#include <SDL_version.h>
-
-#if SDL_VERSION_ATLEAST(2,0,0)
-
-#include <SDLG_stdinc.h>
 #include <SDLG_video.h>
 
-#endif
-#endif
+static SDL_Surface* SDLG_surface = NULL;
+static SDL_Window* SDLG_window = NULL;
+static SDL_Renderer* SDLG_renderer = NULL;
+
+SDL_Surface *
+SDL_GetVideoSurface(void)
+{
+    return SDLG_surface;
+}
+
+SDL_Window *
+SDLG_GetVideoWindow(void)
+{
+    return SDLG_window;
+}
+
+SDL_Renderer *
+SDLG_GetVideoRenderer(void)
+{
+    return SDLG_renderer;
+}

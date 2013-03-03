@@ -26,20 +26,53 @@
 
 /**
  * @file
- * @brief Main file of the SDL glue library.
+ * @brief Contains the emulation for SDL_video.h.
  *
- * This header includes all other library headers.
+ * Where SDL 1.2 just had one display surface SDL 2.0 can have multiple. The
+ * emulation uses one static surface, which can be retrieved with the SDL 1.2
+ * emulation function @ref SDL_GetVideoSurface. Since SDL 2.0 also has windows
+ * and renderers a static one is provided as well. These can be retrieved with
+ * @ref SDLG_GetVideoWindow and @ref SDLG_GetVideoRenderer respectively.
  */
 
-#ifndef SDLG_H_INCLUDED
-#define SDLG_H_INCLUDED
+#ifndef SDLG_VIDEO_H_INCLUDED
+#define SDLG_VIDEO_H_INCLUDED
 
 #include <SDL_version.h>
 
 #if SDL_VERSION_ATLEAST(2,0,0)
 
 #include <SDLG_stdinc.h>
-#include <SDLG_video.h>
+
+#include <SDL_render.h>
+#include <SDL_video.h>
+
+#include "begin_code.h"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/** Emulation for SDL_GetVideoSurface. */
+extern DECLSPEC SDL_Surface *SDLCALL SDL_GetVideoSurface(void);
+
+/**
+ * Returns the current display window.
+ *
+ * @returns                       The current display window.
+ */
+extern DECLSPEC SDL_Window *SDLCALL SDLG_GetVideoWindow(void);
+
+/**
+ * Returns the current display window's renderer.
+ *
+ * @returns                       The current display window's renderer.
+ */
+extern DECLSPEC SDL_Renderer *SDLCALL SDLG_GetVideoRenderer(void);
+
+#ifdef __cplusplus
+}
+#endif
+#include "close_code.h"
 
 #endif
 #endif
