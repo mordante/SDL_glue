@@ -44,6 +44,24 @@ extern "C" {
 #endif
 
 /**
+ * Defines an unused flag value.
+ *
+ * In SDL 2.0 several flags are no longer used. For compatibility these flags
+ * need to be defined. All flags that are no longer used are sharing this
+ * value.
+ */
+#define SDLG_UNUSED_FLAG 0
+
+/**
+ * Defines a helper for unused parameters.
+ *
+ * Some parameters are no longer used in SDL 2.0. In order to avoid compiler
+ * warnings regarding unused parameters they are used in the function with this
+ * macro; silencing the compiler.
+ */
+#define SDLG_UNUSED_PARAMETER(x) ((void)(x))
+
+/**
  * Emulation for SDL_putenv.
  *
  * A call to this function like

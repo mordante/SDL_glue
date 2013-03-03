@@ -69,6 +69,51 @@ extern DECLSPEC SDL_Window *SDLCALL SDLG_GetVideoWindow(void);
  */
 extern DECLSPEC SDL_Renderer *SDLCALL SDLG_GetVideoRenderer(void);
 
+/* SDL 1.2 compatibility flags */
+#define SDL_HWSURFACE       SDLG_UNUSED_FLAG
+#define SDL_ANYFORMAT       SDLG_UNUSED_FLAG
+#define SDL_HWPALETTE       SDLG_UNUSED_FLAG
+#define SDL_DOUBLEBUF       SDLG_UNUSED_FLAG
+#define SDL_FULLSCREEN      SDL_WINDOW_FULLSCREEN
+#define SDL_OPENGL          SDL_WINDOW_OPENGL
+#define SDL_OPENGLBLIT      SDL_WINDOW_OPENGL
+#define SDL_RESIZABLE       SDL_WINDOW_RESIZABLE
+#define SDL_NOFRAME         SDL_WINDOW_BORDERLESS
+
+/**
+ * Emulation for SDL_VideoModeOK.
+ *
+ * @param width                   The wanted width.
+ * @param height                  The wanted height.
+ * @param bpp                     The wanted bits per pixel.
+ * @param flags                   The flags for the video mode to test.
+ *
+ * @returns                       The bits per pixel in which the wanted mode
+ *                                is available.
+ * @retval 0                      The wanted mode is not available.
+ */
+extern DECLSPEC int SDLCALL SDL_VideoModeOK(int width,
+                                            int height,
+                                            int bpp, Uint32 flags);
+
+/**
+ * Emulation for SDL_SetVideoMode.
+ *
+ * This function initialises the display surface, like in SDL 1.2, and also the
+ * window and the renderer.
+ *
+ * @param width                   The width for the video mode.
+ * @param height                  The height for the video mode.
+ * @param bpp                     Unused.
+ * @param flags                   The flags for the video mode.
+ *
+ * @returns                       The created video surface. The pointer can
+ *                                later also be retrieved with
+ *                                @ref SDL_GetVideoSurface.
+ * @retval NULL                   Upon error.
+ */
+extern DECLSPEC SDL_Surface *SDLCALL SDL_SetVideoMode(int width, int height,
+                                                      int bpp, Uint32 flags);
 #ifdef __cplusplus
 }
 #endif

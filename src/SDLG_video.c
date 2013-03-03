@@ -34,6 +34,7 @@
 static SDL_Surface* SDLG_surface = NULL;
 static SDL_Window* SDLG_window = NULL;
 static SDL_Renderer* SDLG_renderer = NULL;
+static const char* SDLG_window_title = NULL;
 
 SDL_Surface *
 SDL_GetVideoSurface(void)
@@ -51,4 +52,76 @@ SDL_Renderer *
 SDLG_GetVideoRenderer(void)
 {
     return SDLG_renderer;
+}
+
+static int
+GetVideoDisplay()
+{
+	return 0;
+}
+
+int
+SDL_VideoModeOK(int width, int height, int bpp, Uint32 flags)
+{
+	int i, actual_bpp = 0;
+
+	if (!(flags & SDL_FULLSCREEN)) {
+		SDL_DisplayMode mode;
+		SDL_GetDesktopDisplayMode(GetVideoDisplay(), &mode);
+		return SDL_BITSPERPIXEL(mode.format);
+	}
+
+	for (i = 0; i < SDL_GetNumDisplayModes(GetVideoDisplay()); ++i) {
+		SDL_DisplayMode mode;
+		SDL_GetDisplayMode(GetVideoDisplay(), i, &mode);
+		if (!mode.w || !mode.h || (width == mode.w && height == mode.h)) {
+			if (!mode.format) {
+				return bpp;
+			}
+			if (SDL_BITSPERPIXEL(mode.format) >= (Uint32) bpp) {
+				actual_bpp = SDL_BITSPERPIXEL(mode.format);
+			}
+		}
+	}
+	return actual_bpp;
+}
+
+SDL_Surface *
+SDL_SetVideoMode(int width, int height, int bpp, Uint32 flags)
+{
+	const char* title = SDLG_window_title;
+
+	SDLG_UNUSED_PARAMETER(bpp);
+
+	if(SDLG_window) {
+		SDL_DestroyWindow(SDLG_window);
+		SDLG_surface = NULL;
+		SDLG_window = NULL;
+	}
+
+	if(SDLG_renderer) {
+		SDL_DestroyRenderer(SDLG_renderer);
+		SDLG_renderer = NULL;
+	}
+
+	if(!title) {
+		title = "";
+	}
+
+	SDLG_window = SDL_CreateWindow(
+			  title
+			, SDL_WINDOWPOS_UNDEFINED
+			, SDL_WINDOWPOS_UNDEFINED
+			, width
+			, height
+			, SDL_WINDOW_SHOWN | flags);
+
+	if(!SDLG_window) {
+		return NULL;
+	}
+
+	SDLG_renderer = SDL_CreateRenderer(SDLG_window, -1 , 0);
+	SDLG_surface = SDL_GetWindowSurface(SDLG_window);
+
+	return SDLG_surface;
 }
