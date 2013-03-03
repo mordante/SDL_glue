@@ -34,7 +34,8 @@
 static SDL_Surface* SDLG_surface = NULL;
 static SDL_Window* SDLG_window = NULL;
 static SDL_Renderer* SDLG_renderer = NULL;
-static const char* SDLG_window_title = NULL;
+static char* SDLG_window_title = NULL;
+static SDL_Surface* SDLG_window_icon = NULL;
 
 SDL_Surface *
 SDL_GetVideoSurface(void)
@@ -120,8 +121,56 @@ SDL_SetVideoMode(int width, int height, int bpp, Uint32 flags)
 		return NULL;
 	}
 
+	if(SDLG_window_icon) {
+		SDL_SetWindowIcon(SDLG_window, SDLG_window_icon);
+	}
+
 	SDLG_renderer = SDL_CreateRenderer(SDLG_window, -1 , 0);
 	SDLG_surface = SDL_GetWindowSurface(SDLG_window);
 
 	return SDLG_surface;
+}
+
+DECLSPEC void SDLCALL SDL_WM_SetCaption(const char *title, const char *icon)
+{
+	SDLG_UNUSED_PARAMETER(icon);
+
+	if(SDLG_window_title) {
+		SDL_free(SDLG_window_title);
+		SDLG_window_title = NULL;
+	}
+
+	if(title) {
+		SDLG_window_title = SDL_strdup(title);
+	}
+
+	if(title) {
+		SDL_SetWindowTitle(SDLG_window, title);
+	} else {
+		SDL_SetWindowTitle(SDLG_window, "");
+	}
+}
+
+DECLSPEC void SDLCALL SDL_WM_GetCaption(char **title, char **icon)
+{
+	*title = SDLG_window_title;
+	*icon = NULL;
+}
+
+DECLSPEC void SDLCALL SDL_WM_SetIcon(SDL_Surface *icon, Uint8 *mask)
+{
+	SDLG_UNUSED_PARAMETER(mask);
+
+	if(SDLG_window_icon) {
+		SDL_FreeSurface(SDLG_window_icon);
+		SDLG_window_icon = NULL;
+	}
+
+	if(icon) {
+		SDLG_window_icon = SDL_ConvertSurface(icon, icon->format, icon->flags);
+	}
+
+	if(SDLG_window && icon) {
+		SDL_SetWindowIcon(SDLG_window, icon);
+	}
 }

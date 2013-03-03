@@ -114,6 +114,33 @@ extern DECLSPEC int SDLCALL SDL_VideoModeOK(int width,
  */
 extern DECLSPEC SDL_Surface *SDLCALL SDL_SetVideoMode(int width, int height,
                                                       int bpp, Uint32 flags);
+
+/**
+ * Emulation for SDL_WM_SetCaption.
+ *
+ * @param title                   The title of the window.
+ * @param icon                    Unused.
+ */
+extern DECLSPEC void SDLCALL SDL_WM_SetCaption(
+		  const char *title
+		, const char *icon);
+
+/**
+ * Emulation for SDL_WM_GetCaption.
+ *
+ * @param [out] title             The title of the window.
+ * @param [out] icon              Unused, @c NULL.
+ */
+extern DECLSPEC void SDLCALL SDL_WM_GetCaption(char **title, char **icon);
+
+/**
+ * Emulation for SDL_WM_SetIcon.
+ *
+ * @param icon                    The icon to use as window icon.
+ * @param mask                    Unused.
+ */
+extern DECLSPEC void SDLCALL SDL_WM_SetIcon(SDL_Surface *icon, Uint8 *mask);
+
 #ifdef __cplusplus
 }
 #endif
