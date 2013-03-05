@@ -141,6 +141,51 @@ extern DECLSPEC void SDLCALL SDL_WM_GetCaption(char **title, char **icon);
  */
 extern DECLSPEC void SDLCALL SDL_WM_SetIcon(SDL_Surface *icon, Uint8 *mask);
 
+/**
+ * Emulation for SDL_Flip.
+ *
+ * @note Instead of selecting the screen buffer to swap the one provided by
+ * @ref SDL_GetVideoSurface is flipped. Proper flipping might be implemented
+ * later.
+ *
+ * @param screen                  Unused.
+ *
+ * @returns                       Fixed at @c 0.
+ */
+extern DECLSPEC int SDLCALL SDL_Flip(SDL_Surface * screen);
+
+/**
+ * Emulation for SDL_UpdateRect.
+ *
+ * @note Instead of selecting the screen buffer to update the one provided by
+ * @ref SDL_GetVideoSurface is updated. Proper updating might be implemented
+ * later.
+ *
+ * @param screen                  Unused.
+ * @param x                       The x-coordinate of the area to update.
+ * @param y                       The y-coordinate of the area to update.
+ * @param w                       The width of the area to update.
+ * @param h                       The height of the area to update.
+ */
+extern DECLSPEC void SDLCALL SDL_UpdateRect(SDL_Surface * screen,
+                                            Sint32 x,
+                                            Sint32 y, Uint32 w, Uint32 h);
+
+/**
+ * Emulation for SDL_UpdateRects.
+ *
+ * @note Instead of selecting the screen buffer to update the one provided by
+ * @ref SDL_GetVideoSurface is updated. Proper updating might be implemented
+ * later.
+ *
+ * @param screen                  Unused.
+ * @param numrects                The number of areas to update.
+ * @param rects                   Pointer to array of @p numrects rectangles
+ *                                containing the area to update.
+ */
+extern DECLSPEC void SDLCALL SDL_UpdateRects(SDL_Surface * screen,
+                                             int numrects, SDL_Rect * rects);
+
 #ifdef __cplusplus
 }
 #endif

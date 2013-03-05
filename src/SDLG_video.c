@@ -174,3 +174,33 @@ DECLSPEC void SDLCALL SDL_WM_SetIcon(SDL_Surface *icon, Uint8 *mask)
 		SDL_SetWindowIcon(SDLG_window, icon);
 	}
 }
+
+int
+SDL_Flip(SDL_Surface * screen)
+{
+	SDL_UpdateRect(screen, 0, 0, 0, 0);
+    return 0;
+}
+
+void
+SDL_UpdateRect(SDL_Surface * screen, Sint32 x, Sint32 y, Uint32 w, Uint32 h)
+{
+        SDL_Rect rect;
+
+        /* Fill the rectangle */
+        rect.x = (int) x;
+        rect.y = (int) y;
+        rect.w = (int) (w ? (int) w : screen->w);
+        rect.h = (int) (h ? (int) h : screen->h);
+        SDL_UpdateRects(screen, 1, &rect);
+}
+
+void
+SDL_UpdateRects(SDL_Surface * screen, int numrects, SDL_Rect * rects)
+{
+	SDLG_UNUSED_PARAMETER(screen);
+
+	if(SDLG_window) {
+	    SDL_UpdateWindowSurfaceRects(SDLG_window, rects, numrects);
+	}
+}
