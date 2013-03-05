@@ -26,13 +26,11 @@
 
 /**
  * @file
- * @brief Main file of the SDL glue library.
- *
- * This header includes all other library headers.
+ * @brief Contains the emulation for SDL_keyboard.h.
  */
 
-#ifndef SDLG_H_INCLUDED
-#define SDLG_H_INCLUDED
+#ifndef SDLG_KEYBOARD_H_INCLUDED
+#define SDLG_KEYBOARD_H_INCLUDED
 
 #include <SDL_version.h>
 
@@ -40,8 +38,33 @@
 
 #include <SDLG_stdinc.h>
 
-#include <SDLG_keyboard.h>
-#include <SDLG_video.h>
+#include <SDL_keyboard.h>
+
+#include "begin_code.h"
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/** Emulate the renaming of the struct SDLKey. */
+#define SDLKey SDL_Keycode
+
+/** Emulate the renaming of the struct SDLMod. */
+#define SDLMod SDL_Keymod
+
+
+/**
+ * Emulate the renaming of the function SDL_GetKeyState.
+ *
+ * @warning The returned array is indexed by SDL_Scancode in SDL 2.0 and by
+ * SDLKey in SDL 1.2. SDL_GetScancodeFromKey can be used to convert the SDLKey
+ * to a SDL_Scancode.
+ */
+#define SDL_GetKeyState SDL_GetKeyboardState
+
+#ifdef __cplusplus
+}
+#endif
+#include "close_code.h"
 
 #endif
 #endif
