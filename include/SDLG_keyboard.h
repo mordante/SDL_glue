@@ -61,6 +61,68 @@ extern "C" {
  */
 #define SDL_GetKeyState SDL_GetKeyboardState
 
+
+/**
+ *  \name Obsolete or renamed key codes
+ */
+/*@{*/
+
+#define SDL_keysym		SDL_Keysym
+#define SDL_KeySym		SDL_Keysym
+#define SDL_scancode	SDL_Scancode
+#define SDL_ScanCode	SDL_Scancode
+#define SDLKey          SDL_Keycode
+#define SDLMod          SDL_Keymod
+
+/**
+ *  \name Renamed keys
+ *
+ *  These key constants were renamed for clarity or consistency.
+ */
+/*@{*/
+#define SDLK_KP0 SDLK_KP_0
+#define SDLK_KP1 SDLK_KP_1
+#define SDLK_KP2 SDLK_KP_2
+#define SDLK_KP3 SDLK_KP_3
+#define SDLK_KP4 SDLK_KP_4
+#define SDLK_KP5 SDLK_KP_5
+#define SDLK_KP6 SDLK_KP_6
+#define SDLK_KP7 SDLK_KP_7
+#define SDLK_KP8 SDLK_KP_8
+#define SDLK_KP9 SDLK_KP_9
+#define SDLK_NUMLOCK SDLK_NUMLOCKCLEAR
+#define SDLK_SCROLLOCK SDLK_SCROLLLOCK
+#define SDLK_PRINT SDLK_PRINTSCREEN
+#define SDLK_LMETA SDLK_LGUI
+#define SDLK_RMETA SDLK_RGUI
+/*@}*//*Renamed keys*/
+
+/**
+ *  \name META modifier
+ *
+ *  The META modifier is equivalent to the GUI modifier from the USB standard.
+ */
+/*@{*/
+#define KMOD_LMETA KMOD_LGUI
+#define KMOD_RMETA KMOD_RGUI
+#define KMOD_META KMOD_GUI
+/*@}*//*META modifier*/
+
+/**
+ *  \name Not in USB
+ *
+ *  These keys don't appear in the USB specification (or at least not under
+ *  those names). I'm unsure if the following assignments make sense or if these
+ *  codes should be defined as actual additional SDLK_ constants.
+ */
+/*@{*/
+#define SDLK_LSUPER SDLK_LMETA
+#define SDLK_RSUPER SDLK_RMETA
+#define SDLK_COMPOSE SDLK_APPLICATION
+#define SDLK_BREAK SDLK_STOP
+#define SDLK_EURO SDLK_2
+/*@}*//*Not in USB*/
+
 #ifdef __cplusplus
 }
 #endif
