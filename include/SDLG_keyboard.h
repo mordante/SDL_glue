@@ -123,6 +123,46 @@ extern "C" {
 #define SDLK_EURO SDLK_2
 /*@}*//*Not in USB*/
 
+
+/** The SDL_DEFAULT_REPEAT_DELAY value from SDL 1.2. */
+#define SDL_DEFAULT_REPEAT_DELAY	500
+
+/** The SDL_DEFAULT_REPEAT_INTERVAL value from SDL 1.2. */
+#define SDL_DEFAULT_REPEAT_INTERVAL	30
+
+/**
+ * Dummy function for SDL_EnableKeyRepeat.
+ *
+ * The function is a NOP.
+ *
+ * @param delay                   Unused.
+ * @param interval                Unused.
+ */
+extern DECLSPEC int SDLCALL SDL_EnableKeyRepeat(int delay, int interval);
+
+/**
+ * Dummy function for SDL_GetKeyRepeat.
+ *
+ * The function is a NOP.
+ *
+ * @param delay                   Unused, set to @ref SDL_DEFAULT_REPEAT_DELAY.
+ * @param interval                Unused, set to
+ *                                @ref SDL_DEFAULT_REPEAT_INTERVAL.
+ */
+extern DECLSPEC void SDLCALL SDL_GetKeyRepeat(int *delay, int *interval);
+
+/**
+ * Emulation for SDL_EnableUNICODE.
+ *
+ * @param enable                 Whether or not to enable the unicode handling.
+ *                               - @c 0 disable the handling.
+ *                               - @c 1 enable the handling.
+ *                               - other values are ingored.
+ *
+ * @returns                      The enabled state before calling this function.
+ */
+extern DECLSPEC int SDLCALL SDL_EnableUNICODE(int enable);
+
 #ifdef __cplusplus
 }
 #endif

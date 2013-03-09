@@ -9,6 +9,7 @@ include_directories(${CMAKE_SOURCE_DIR}/include/)
 
 add_library(SDLG SHARED
 	SDLG_stdinc.c
+	SDLG_keyboard.c
 	SDLG_video.c
 )
 
