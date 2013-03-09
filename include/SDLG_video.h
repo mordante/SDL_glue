@@ -129,7 +129,7 @@ extern DECLSPEC void SDLCALL SDL_WM_SetCaption(
  * Emulation for SDL_WM_GetCaption.
  *
  * @param [out] title             The title of the window.
- * @param [out] icon              Unused, @c NULL.
+ * @param [out] icon              Unused, set to @c NULL.
  */
 extern DECLSPEC void SDLCALL SDL_WM_GetCaption(char **title, char **icon);
 
