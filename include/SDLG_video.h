@@ -186,6 +186,42 @@ extern DECLSPEC void SDLCALL SDL_UpdateRect(SDL_Surface * screen,
 extern DECLSPEC void SDLCALL SDL_UpdateRects(SDL_Surface * screen,
                                              int numrects, SDL_Rect * rects);
 
+
+/* SDL 1.2 compatibility flags */
+#define SDL_LOGPAL SDLG_UNUSED_FLAG
+#define SDL_PHYSPAL SDLG_UNUSED_FLAG
+
+/**
+ * Emulation for SDL_SetPalette.
+ *
+ * @param surface                 The surface whose palette to modify.
+ * @param flags                   Unused.
+ * @param colors                  An array with new colors to use.
+ * @param firstcolor              The first color to change.
+ * @param ncolors                 The number of colors to modify.
+ *
+ * @returns                       Status; 0 upon success a negative value when
+ *                                an error occurred.
+ */
+extern DECLSPEC int SDLCALL SDL_SetPalette(SDL_Surface * surface,
+                                           int flags,
+                                           const SDL_Color * colors,
+                                           int firstcolor, int ncolors);
+
+/**
+ * Emulation for SDL_SetColors.
+ *
+ * @param surface                 The surface whose color palette to modify.
+ * @param colors                  An array with new colors to use.
+ * @param firstcolor              The first color to change.
+ * @param ncolors                 The number of colors to modify.
+ *
+ * @returns                       Status; 0 upon success a negative value when
+ *                                an error occurred.
+ */
+extern DECLSPEC int SDLCALL SDL_SetColors(SDL_Surface * surface,
+                                          const SDL_Color * colors,
+                                          int firstcolor, int ncolors);
 #ifdef __cplusplus
 }
 #endif

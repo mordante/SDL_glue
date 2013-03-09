@@ -204,3 +204,27 @@ SDL_UpdateRects(SDL_Surface * screen, int numrects, SDL_Rect * rects)
 	    SDL_UpdateWindowSurfaceRects(SDLG_window, rects, numrects);
 	}
 }
+
+int
+SDL_SetPalette(SDL_Surface * surface, int flags, const SDL_Color * colors,
+               int firstcolor, int ncolors)
+{
+	SDLG_UNUSED_PARAMETER(flags);
+
+    return SDL_SetColors(surface, colors, firstcolor, ncolors);
+}
+
+int
+SDL_SetColors(SDL_Surface * surface, const SDL_Color * colors, int firstcolor,
+              int ncolors)
+{
+    if(SDL_SetPaletteColors(
+				  surface->format->palette
+				, colors
+				, firstcolor
+				, ncolors) == 0) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
