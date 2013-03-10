@@ -219,6 +219,20 @@ extern DECLSPEC void SDLCALL SDL_UpdateRect(SDL_Surface * screen,
 extern DECLSPEC void SDLCALL SDL_UpdateRects(SDL_Surface * screen,
                                              int numrects, SDL_Rect * rects);
 
+/**
+ * Emulation for SDL_GetAppState.
+ *
+ * @note In SDL 1.2 this was in the SDL_active.h header. In SDL 2.0 the code
+ * used is in SDL_video.h. So added to the existing header instead of adding a
+ * new one.
+ *
+ * @returns                       The application state flags. Any of the
+ *                                following flags might be set:
+ *                                - SDL_APPACTIVE
+ *                                - SDL_APPINPUTFOCUS
+ *                                - SDL_APPMOUSEFOCUS
+ */
+extern DECLSPEC Uint8 SDLCALL SDL_GetAppState(void);
 
 /* SDL 1.2 compatibility flags */
 #define SDL_LOGPAL SDLG_UNUSED_FLAG

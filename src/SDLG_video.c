@@ -261,3 +261,26 @@ SDL_SetColors(SDL_Surface * surface, const SDL_Color * colors, int firstcolor,
         return 0;
     }
 }
+
+Uint8
+SDL_GetAppState(void)
+{
+    Uint8 state = 0;
+    Uint32 flags = 0;
+
+	if(!SDLG_window) {
+		return state;
+	}
+
+    flags = SDL_GetWindowFlags(SDLG_window);
+    if ((flags & SDL_WINDOW_SHOWN) && !(flags & SDL_WINDOW_MINIMIZED)) {
+        state |= SDL_APPACTIVE;
+    }
+    if (flags & SDL_WINDOW_INPUT_FOCUS) {
+        state |= SDL_APPINPUTFOCUS;
+    }
+    if (flags & SDL_WINDOW_MOUSE_FOCUS) {
+        state |= SDL_APPMOUSEFOCUS;
+    }
+    return state;
+}
