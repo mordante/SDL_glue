@@ -31,6 +31,8 @@
 
 #include <SDLG_video.h>
 
+#include <SDLG_events.h>
+
 static SDL_Surface* SDLG_surface = NULL;
 static SDL_Window* SDLG_window = NULL;
 static SDL_Renderer* SDLG_renderer = NULL;
@@ -153,6 +155,11 @@ SDL_SetVideoMode(int width, int height, int bpp, Uint32 flags)
 			, GetCreateRendererFlags(flags));
 
 	SDLG_surface = SDL_GetWindowSurface(SDLG_window);
+
+    /* Set up the event filter */
+    if (!SDL_GetEventFilter(NULL, NULL) && (flags & SDLG_NOEVENT) == 0) {
+        SDL_SetEventFilter(SDLG_EventFilter, NULL);
+    }
 
 	return SDLG_surface;
 }

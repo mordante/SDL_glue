@@ -87,6 +87,18 @@ extern DECLSPEC SDL_Renderer *SDLCALL SDLG_GetVideoRenderer(void);
 #define SDL_NOFRAME        0x00000100 /**< Mapped to SDL_WINDOW_BORDERLESS */
 
 /**
+ * This flag disables the registration of the event filter.
+ *
+ * By default when no event filter is set, @ref SDL_SetVideoMode sets @ref
+ * SDLG_EventFilter as filter. This flag suppresses that behaviour.
+ *
+ * Since setting the compatibility filter is probably wanted, that has been
+ * made the default, allowing to use the SDL 1.2 flags to get the wanted
+ * behaviour in SDL 2.0.
+ */
+#define SDLG_NOEVENT       0x00001000
+
+/**
  * Emulation for SDL_VideoModeOK.
  *
  * @param width                   The wanted width.
@@ -124,6 +136,9 @@ extern DECLSPEC int SDLCALL SDL_VideoModeOK(int width,
  *                                The flags that are used by the function are
  *                                to create the renderer are:
  *                                - @ref SDL_HWSURFACE
+ *                                The SDLG flags that are used by the function
+ *                                are:
+ *                                - @ref SDLG_NOEVENT
  *
  * @returns                       The created video surface. The pointer can
  *                                later also be retrieved with
