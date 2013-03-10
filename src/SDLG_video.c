@@ -87,6 +87,28 @@ SDL_VideoModeOK(int width, int height, int bpp, Uint32 flags)
 	return actual_bpp;
 }
 
+static Uint32 GetCreateWindowFlags(Uint32 flags)
+{
+	Uint32 result = 0;
+
+	if(flags & SDL_FULLSCREEN) result |= SDL_WINDOW_FULLSCREEN;
+	if(flags & SDL_OPENGL)     result |= SDL_WINDOW_OPENGL;
+	if(flags & SDL_OPENGLBLIT) result |= SDL_WINDOW_OPENGL;
+	if(flags & SDL_RESIZABLE)  result |= SDL_WINDOW_RESIZABLE;
+	if(flags & SDL_NOFRAME)    result |= SDL_WINDOW_BORDERLESS;
+
+	return result;
+}
+
+static Uint32 GetCreateRendererFlags(Uint32 flags)
+{
+	Uint32 result = 0;
+
+	if(flags & SDL_HWSURFACE) result |= SDL_RENDERER_ACCELERATED;
+
+	return result;
+}
+
 SDL_Surface *
 SDL_SetVideoMode(int width, int height, int bpp, Uint32 flags)
 {
@@ -115,7 +137,7 @@ SDL_SetVideoMode(int width, int height, int bpp, Uint32 flags)
 			, SDL_WINDOWPOS_UNDEFINED
 			, width
 			, height
-			, SDL_WINDOW_SHOWN | flags);
+			, SDL_WINDOW_SHOWN | GetCreateWindowFlags(flags));
 
 	if(!SDLG_window) {
 		return NULL;
@@ -125,7 +147,11 @@ SDL_SetVideoMode(int width, int height, int bpp, Uint32 flags)
 		SDL_SetWindowIcon(SDLG_window, SDLG_window_icon);
 	}
 
-	SDLG_renderer = SDL_CreateRenderer(SDLG_window, -1 , 0);
+	SDLG_renderer = SDL_CreateRenderer(
+			  SDLG_window
+			, -1
+			, GetCreateRendererFlags(flags));
+
 	SDLG_surface = SDL_GetWindowSurface(SDLG_window);
 
 	return SDLG_surface;

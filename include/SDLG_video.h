@@ -69,16 +69,22 @@ extern DECLSPEC SDL_Window *SDLCALL SDLG_GetVideoWindow(void);
  */
 extern DECLSPEC SDL_Renderer *SDLCALL SDLG_GetVideoRenderer(void);
 
-/* SDL 1.2 compatibility flags */
-#define SDL_HWSURFACE       SDLG_UNUSED_FLAG
-#define SDL_ANYFORMAT       SDLG_UNUSED_FLAG
-#define SDL_HWPALETTE       SDLG_UNUSED_FLAG
-#define SDL_DOUBLEBUF       SDLG_UNUSED_FLAG
-#define SDL_FULLSCREEN      SDL_WINDOW_FULLSCREEN
-#define SDL_OPENGL          SDL_WINDOW_OPENGL
-#define SDL_OPENGLBLIT      SDL_WINDOW_OPENGL
-#define SDL_RESIZABLE       SDL_WINDOW_RESIZABLE
-#define SDL_NOFRAME         SDL_WINDOW_BORDERLESS
+/*
+ * SDL 1.2 compatibility flags
+ *
+ * Note they are not mapped to the SDL 2.0 flags directly, but use their own
+ * values. This due to the face that SDL_SetVideoMode can take both flags for
+ * SDL_CreateWindow and SDL_CreateRenderer.
+ */
+#define SDL_HWSURFACE      0x00000001 /**< Mapped to SDL_RENDERER_ACCELERATED */
+#define SDL_ANYFORMAT      SDLG_UNUSED_FLAG
+#define SDL_HWPALETTE      SDLG_UNUSED_FLAG
+#define SDL_DOUBLEBUF      SDLG_UNUSED_FLAG
+#define SDL_FULLSCREEN     0x00000010 /**< Mapped to SDL_WINDOW_FULLSCREEN */
+#define SDL_OPENGL         0x00000020 /**< Mapped to SDL_WINDOW_OPENGL */
+#define SDL_OPENGLBLIT     0x00000040 /**< Mapped to SDL_WINDOW_OPENGL */
+#define SDL_RESIZABLE      0x00000080 /**< Mapped to SDL_WINDOW_RESIZABLE */
+#define SDL_NOFRAME        0x00000100 /**< Mapped to SDL_WINDOW_BORDERLESS */
 
 /**
  * Emulation for SDL_VideoModeOK.
@@ -86,7 +92,9 @@ extern DECLSPEC SDL_Renderer *SDLCALL SDLG_GetVideoRenderer(void);
  * @param width                   The wanted width.
  * @param height                  The wanted height.
  * @param bpp                     The wanted bits per pixel.
- * @param flags                   The flags for the video mode to test.
+ * @param flags                   The flags for the video mode to test. The
+ *                                flags that are used by the function are:
+ *                                - @ref SDL_FULLSCREEN
  *
  * @returns                       The bits per pixel in which the wanted mode
  *                                is available.
@@ -105,7 +113,17 @@ extern DECLSPEC int SDLCALL SDL_VideoModeOK(int width,
  * @param width                   The width for the video mode.
  * @param height                  The height for the video mode.
  * @param bpp                     Unused.
- * @param flags                   The flags for the video mode.
+ * @param flags                   The flags for the video mode. The
+ *                                flags that are used by the function are to
+ *                                create the window are:
+ *                                - @ref SDL_FULLSCREEN
+ *                                - @ref SDL_OPENGL
+ *                                - @ref SDL_OPENGLBLIT
+ *                                - @ref SDL_RESIZABLE
+ *                                - @ref SDL_NOFRAME
+ *                                The flags that are used by the function are
+ *                                to create the renderer are:
+ *                                - @ref SDL_HWSURFACE
  *
  * @returns                       The created video surface. The pointer can
  *                                later also be retrieved with
